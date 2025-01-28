@@ -13,7 +13,6 @@ export default function MoveListScreen({ route, navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Move List for {character.name}</Text>
-      {/* Add additional content here */}
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.goBack()}
@@ -25,13 +24,10 @@ export default function MoveListScreen({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  container: { flex: 1, padding: 16, backgroundColor: '#121212' },
+  header: { fontSize: 22, fontWeight: 'bold', color: '#fff', marginBottom: 16 },
   backButton: {
-    backgroundColor: '#007bff', // Button color
+    backgroundColor: '#007bff',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,

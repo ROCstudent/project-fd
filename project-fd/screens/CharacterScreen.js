@@ -22,8 +22,6 @@ const characters = {
 
 export default function CharacterScreen({ route, navigation }) {
   const { game } = route.params;
-
-  // Get the characters for the selected game
   const gameCharacters = characters[game.name];
 
   const handleCharacterSelect = (character) => {
@@ -31,18 +29,16 @@ export default function CharacterScreen({ route, navigation }) {
   };
 
   return (
-
-        
     <View style={styles.container}>
       <Navbar />
       <Text style={styles.header}>Characters from {game.name}</Text>
-            <TouchableOpacity
-              style={styles.backButton}
-              onPress={() => navigation.goBack()}
-            >
-              <Text style={styles.backButtonText}>Go Back</Text>
-            </TouchableOpacity>
-      {/* Render the FlatList here */}
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}
+      >
+        <Text style={styles.backButtonText}>Go Back</Text>
+      </TouchableOpacity>
+
       <FlatList
         data={gameCharacters}
         keyExtractor={(item) => item.id}
@@ -61,22 +57,21 @@ export default function CharacterScreen({ route, navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: '#121212' },
-  header: { fontSize: 20, fontWeight: 'bold', color: 'white', marginBottom: 16, marginTop: 15 },
+  header: { fontSize: 20, fontWeight: 'bold', color: '#fff', marginBottom: 16 },
   card: { marginBottom: 16, borderRadius: 8, overflow: 'hidden', backgroundColor: '#1e1e1e' },
   image: { width: '100%', height: 150 },
-  text: { padding: 8, fontSize: 18, fontWeight: 'bold', color: 'white', textAlign: 'center' },
+  text: { padding: 8, fontSize: 18, fontWeight: 'bold', color: '#fff', textAlign: 'center' },
   backButton: {
-    backgroundColor: '#007bff', // Button color
+    backgroundColor: '#007bff', 
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 5,
     width: 95,
-    marginBottom : 20,
+    marginBottom: 20,
   },
   backButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
-  
 });

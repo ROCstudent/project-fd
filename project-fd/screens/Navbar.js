@@ -1,27 +1,30 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import WelcomeScreen from '../screens/WelcomeScreen';
-import CharacterScreen from '../screens/CharacterScreen';
-import MoveListScreen from '../screens/MoveListScreen';
 
 export default function Navbar() {
   const navigation = useNavigation();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (query) => {
+    // Handle search logic here, for example, navigating to a search results screen
+    console.log('Search query:', query);
+  };
 
   return (
     <View style={styles.navbar}>
       <TouchableOpacity onPress={() => navigation.navigate('Welcome')}>
         <Text style={styles.navText}>Home</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('CharacterScreen', { game: { name: 'Street Fighter 6' } })}>
-        <Text style={styles.navText}>Street Fighter 6</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('CharacterScreen', { game: { name: 'Tekken 8' } })}>
-        <Text style={styles.navText}>Tekken 8</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('CharacterScreen', { game: { name: 'Granblue Fantasy: Versus' } })}>
-        <Text style={styles.navText}>Granblue</Text>
-      </TouchableOpacity>
+
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search"
+        placeholderTextColor="#ccc"
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+        onSubmitEditing={() => handleSearch(searchQuery)}
+      />
     </View>
   );
 }
@@ -29,7 +32,7 @@ export default function Navbar() {
 const styles = StyleSheet.create({
   navbar: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
     backgroundColor: '#1e1e1e',
@@ -40,5 +43,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
     fontWeight: 'bold',
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
+    marginLeft: 10,
+    borderRadius: 5,
+    backgroundColor: '#333',
+    color: 'white',
+    paddingLeft: 10,
   },
 });
