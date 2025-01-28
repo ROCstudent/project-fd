@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
+    paddingHorizontal: 10,
     backgroundColor: '#1e1e1e',
     borderBottomWidth: 1,
     borderBottomColor: '#333',
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     flex: 1,
-    height: 40,
+    height: 30,
     marginLeft: 10,
     borderRadius: 5,
     backgroundColor: '#333',
