@@ -87,17 +87,5 @@ const styles = StyleSheet.create({
   card: { marginBottom: 16, borderRadius: 8, overflow: 'hidden', backgroundColor: '#1e1e1e' },
   image: { width: '100%', height: 150 },
   text: { padding: 8, fontSize: 18, fontWeight: 'bold', color: '#fff', textAlign: 'center' },
-  backButton: {
-    backgroundColor: '#007bff', 
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  backButtonText: {
-    fontSize: 16,
-    color: 'white',
-    fontWeight: 'bold',
-  },
+
 });
