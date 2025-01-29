@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import Navbar from '../screens/Navbar';
+import { Image as ExpoImage } from 'expo-image'; // Import from expo-image
 
 const characters = {
   'Street Fighter 6': [
@@ -78,7 +79,7 @@ export default function CharacterScreen({ route, navigation }) {
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => handleCharacterSelect(item)}>
               <View style={styles.card}>
-                <Image source={item.image} style={styles.image} />
+                <ExpoImage source={item.image} style={styles.image} contentFit="cover" />
                 <Text style={styles.text}>{item.name}</Text>
               </View>
             </TouchableOpacity>

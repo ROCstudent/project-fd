@@ -1,6 +1,7 @@
-import React from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
 import Navbar from '../screens/Navbar';
+import { useNavigation } from '@react-navigation/native'; // Remove this import
 import { Image as ExpoImage } from 'expo-image'; // Import from expo-image
 
 const games = [
@@ -15,21 +16,36 @@ const games = [
 ];
 
 export default function WelcomeScreen({ navigation }) {
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+
   const handleGameSelect = (game) => {
-    navigation.navigate('Characters', { game });
+    setIsLoading(true); // Set loading state to true
+    setTimeout(() => {
+      navigation.navigate('Characters', { game });
+      setIsLoading(false); // Set loading state to false after loading
+    }, 1500); // Simulate loading time (1.5 seconds)
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <View style={styles.gridContainer}>
-          {games.map((item) => (
-            <TouchableOpacity key={item.id} onPress={() => handleGameSelect(item)} style={styles.card}>
-              <ExpoImage source={item.image} style={styles.image} contentFit="cover"/>
-              <Text style={styles.text}>{item.name}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        {isLoading ? (
+          // Show loading screen
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#45559E" />
+            <Text style={styles.loadingText}>Loading...</Text>
+          </View>
+        ) : (
+          // Show game selection screen
+          <View style={styles.gridContainer}>
+            {games.map((item) => (
+              <TouchableOpacity key={item.id} onPress={() => handleGameSelect(item)} style={styles.card}>
+                <ExpoImage source={item.image} style={styles.image} contentFit="cover" />
+                <Text style={styles.text}>{item.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
       </View>
 
       {/* Navbar outside the main container */}
@@ -73,5 +89,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#121212',
+  },
+  loadingText: {
+    marginTop: 10,
+    color: '#45559E',
+    fontSize: 18,
   },
 });
