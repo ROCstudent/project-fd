@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Image, StyleSheet, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Image as ExpoImage } from 'expo-image'; // Import from expo-image
 
 export default function Navbar() {
   const navigation = useNavigation();
@@ -10,17 +11,32 @@ export default function Navbar() {
       <View style={styles.navContainer}>
         {/* Home Button */}
         <TouchableOpacity onPress={() => navigation.navigate('Welcome')} style={[styles.navItem, styles.navLeft]}>
-          <Image source={require('../assets/images/about.png')} style={styles.fabImage} />
+          <ExpoImage 
+            source={require('../assets/images/about.png')} 
+            style={styles.fabImage} 
+            contentFit="contain"
+            placeholder={require('../assets/images/about.png')} // Optional placeholder
+          />
         </TouchableOpacity>
 
         {/* Floating Action Button with Logo */}
         <TouchableOpacity onPress={() => navigation.navigate('Welcome')} style={styles.fab}>
-          <Image source={require('../assets/images/logo.png')} style={styles.fabImage} />
+          <ExpoImage 
+            source={require('../assets/images/logo.png')} 
+            style={styles.fabImage} 
+            contentFit="contain"
+            placeholder={require('../assets/images/logo.png')} // Optional placeholder
+          />
         </TouchableOpacity>
 
         {/* Profile Button */}
         <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')} style={[styles.navItem, styles.navRight]}>
-          <Image source={require('../assets/images/profile.png')} style={styles.fabImage} />
+          <ExpoImage 
+            source={require('../assets/images/profile.png')} 
+            style={styles.fabImage} 
+            contentFit="contain"
+            placeholder={require('../assets/images/profile.png')} // Optional placeholder
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -34,12 +50,11 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     width: '100%',
-    height: 70,
+    height: Platform.select({ios: 90, andriod: 60, default: 70}),
     backgroundColor: '#1e1e1e',
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 100,
-    flexDirection: 'row', // Ensures children align correctly
   },
   navContainer: {
     flexDirection: 'row',
@@ -58,7 +73,6 @@ const styles = StyleSheet.create({
   navRight: {
     marginLeft: 90, // Moves right button away from the bubble
   },
-  /* Floating Button */
   fab: {
     position: 'absolute',
     bottom: Platform.select({ ios: '30%', android: 20, default: 20 }), // Adjusts for iOS & Android
@@ -77,11 +91,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  /* Logo inside the FAB */
   fabImage: {
     width: 70,
     height: 70,
-    resizeMode: 'contain',
+    contentFit: 'contain',
   },
 });
 

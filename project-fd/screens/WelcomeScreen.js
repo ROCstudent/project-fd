@@ -1,11 +1,17 @@
 import React from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import Navbar from '../screens/Navbar';
+import { Image as ExpoImage } from 'expo-image'; // Import from expo-image
 
 const games = [
   { id: '1', name: 'Street Fighter 6', image: require('../assets/images/sf6.jpg') },
   { id: '2', name: 'Tekken 8', image: require('../assets/images/tekken8.jpg') },
   { id: '3', name: 'Granblue Fantasy: Versus', image: require('../assets/images/gbvs.jpg') },
+  { id: '4', name: 'Undernight In-birth 2', image: require('../assets/images/uni2.jpg') },
+  { id: '5', name: 'Mortal Kombat 1', image: require('../assets/images/mortalkombat1.jpg') },
+  { id: '6', name: 'Guilty Gear Strive', image: require('../assets/images/GG.jpg') },
+  { id: '7', name: 'KOF XV', image: require('../assets/images/KOF.jpg') },
+  { id: '8', name: 'Marvel vs Capcom', image: require('../assets/images/mvc2.png') },
 ];
 
 export default function WelcomeScreen({ navigation }) {
@@ -19,7 +25,7 @@ export default function WelcomeScreen({ navigation }) {
         <View style={styles.gridContainer}>
           {games.map((item) => (
             <TouchableOpacity key={item.id} onPress={() => handleGameSelect(item)} style={styles.card}>
-              <Image source={item.image} style={styles.image} />
+              <ExpoImage source={item.image} style={styles.image} contentFit="cover"/>
               <Text style={styles.text}>{item.name}</Text>
             </TouchableOpacity>
           ))}

@@ -39,6 +39,21 @@ const characters = {
     { id: '2', name: 'Lancelot', image: require('../assets/images/lancelot.jpg') },
     { id: '3', name: 'Ferry', image: require('../assets/images/ferry.jpg') },
   ],
+  'Mortal Kombat 1': [
+    { id: '1', name: 'Coming Soon!', image: require('../assets/images/peace-coming-soon.jpg') },
+  ],
+  'Undernight In-birth 2': [
+    { id: '1', name: 'Coming Soon!', image: require('../assets/images/peace-coming-soon.jpg') },
+  ],
+  'Guilty Gear Strive': [
+    { id: '1', name: 'Coming Soon!', image: require('../assets/images/peace-coming-soon.jpg') },
+  ],
+  'KOF XV': [
+    { id: '1', name: 'Coming Soon!', image: require('../assets/images/peace-coming-soon.jpg') },
+  ],
+  'Marvel vs Capcom': [
+    { id: '1', name: 'Coming Soon!', image: require('../assets/images/peace-coming-soon.jpg') },
+  ],
 };
 
 export default function CharacterScreen({ route, navigation }) {
