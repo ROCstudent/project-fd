@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import Navbar from '../screens/Navbar';
-import CharacterScreen from '../screens/CharacterScreen';
 
 const games = [
   { id: '1', name: 'Street Fighter 6', image: require('../assets/images/sf6.jpg') },
@@ -15,26 +14,58 @@ export default function WelcomeScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.gridContainer}>
-        {games.map((item) => (
-          <TouchableOpacity key={item.id} onPress={() => handleGameSelect(item)} style={styles.card}>
-            <Image source={item.image} style={styles.image} />
-            <Text style={styles.text}>{item.name}</Text>
-          </TouchableOpacity>
-        ))}
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <View style={styles.gridContainer}>
+          {games.map((item) => (
+            <TouchableOpacity key={item.id} onPress={() => handleGameSelect(item)} style={styles.card}>
+              <Image source={item.image} style={styles.image} />
+              <Text style={styles.text}>{item.name}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
 
-      {/* Navbar at the bottom */}
+      {/* Navbar outside the main container */}
       <Navbar />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: '#121212', paddingBottom: 60 },
-  gridContainer: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
-  card: { width: '48%', marginBottom: 16, borderRadius: 10, overflow: 'hidden', backgroundColor: '#1e1e1e', padding: 10 },
-  image: { width: '100%', height: 100, borderRadius: 10 },
-  text: { paddingTop: 8, fontSize: 16, fontWeight: 'bold', color: 'white', textAlign: 'center' },
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#121212', // Ensures full black background
+  },
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#121212',
+    paddingBottom: 60,
+  },
+  gridContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  card: {
+    width: '48%',
+    marginBottom: 16,
+    borderRadius: 10,
+    overflow: 'hidden',
+    backgroundColor: '#1e1e1e',
+    padding: 10,
+  },
+  image: {
+    width: '100%',
+    height: 100,
+    borderRadius: 10,
+  },
+  text: {
+    paddingTop: 8,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',
+  },
 });

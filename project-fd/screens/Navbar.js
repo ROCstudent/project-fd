@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Navbar() {
@@ -10,7 +10,7 @@ export default function Navbar() {
       <View style={styles.navContainer}>
         {/* Home Button */}
         <TouchableOpacity onPress={() => navigation.navigate('Welcome')} style={[styles.navItem, styles.navLeft]}>
-          <Text style={styles.navText}>🏠 Home</Text>
+          <Image source={require('../assets/images/about.png')} style={styles.fabImage} />
         </TouchableOpacity>
 
         {/* Floating Action Button with Logo */}
@@ -20,7 +20,7 @@ export default function Navbar() {
 
         {/* Profile Button */}
         <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')} style={[styles.navItem, styles.navRight]}>
-          <Text style={styles.navText}>👤 Profile</Text>
+          <Image source={require('../assets/images/profile.png')} style={styles.fabImage} />
         </TouchableOpacity>
       </View>
     </View>
@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#1e1e1e',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex:100,
+    zIndex: 100,
+    flexDirection: 'row', // Ensures children align correctly
   },
   navContainer: {
     flexDirection: 'row',
@@ -51,25 +52,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 5,
   },
-  navLeft:{ 
-    marginRight: 100,
+  navLeft: {
+    marginRight: 90, // Moves left button away from the bubble
   },
-  navRight:{
-    marginLeft: 10,
-  },
-  navText: {
-    color: 'white',
-    fontSize: 16,
+  navRight: {
+    marginLeft: 90, // Moves right button away from the bubble
   },
   /* Floating Button */
   fab: {
     position: 'absolute',
-    bottom: -5,
-    alignSelf: 'center',
-    backgroundColor: '#1e1e1e', // Customize to match your UI
+    bottom: Platform.select({ ios: '30%', android: 20, default: 20 }), // Adjusts for iOS & Android
+    left: '50%', // Centers horizontally
+    transform: [{ translateX: -45 }], // Moves it back by half its width (assuming width is 90)
+    backgroundColor: '#1e1e1e',
     width: 90,
     height: 90,
-    borderRadius: 50, // Perfect circle
+    borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 10,
@@ -77,12 +75,13 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    elevation: 5, // Shadow effect for Android
+    elevation: 5,
   },
   /* Logo inside the FAB */
   fabImage: {
-    width: 70,  // Adjust based on your logo size
-    height: 70, // Adjust based on your logo size
+    width: 70,
+    height: 70,
     resizeMode: 'contain',
   },
 });
+
