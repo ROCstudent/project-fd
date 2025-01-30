@@ -1,54 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
 import Navbar from '../screens/Navbar';
-import { useNavigation } from '@react-navigation/native'; // Remove this import
-import { Image as ExpoImage } from 'expo-image'; // Import from expo-image
-
-const games = [
-  { id: '1', name: 'Street Fighter 6', image: require('../assets/images/sf6.jpg') },
-  { id: '2', name: 'Tekken 8', image: require('../assets/images/tekken8.jpg') },
-  { id: '3', name: 'Granblue Fantasy: Versus', image: require('../assets/images/gbvs.jpg') },
-  { id: '4', name: 'Undernight In-birth 2', image: require('../assets/images/uni2.jpg') },
-  { id: '5', name: 'Mortal Kombat 1', image: require('../assets/images/mortalkombat1.jpg') },
-  { id: '6', name: 'Guilty Gear Strive', image: require('../assets/images/GG.jpg') },
-  { id: '7', name: 'KOF XV', image: require('../assets/images/KOF.jpg') },
-  { id: '8', name: 'Marvel vs Capcom', image: require('../assets/images/mvc2.png') },
-];
+import { useNavigation } from '@react-navigation/native';
+import { Image as ExpoImage } from 'expo-image';
 
 export default function WelcomeScreen({ navigation }) {
-  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [games, setGames] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleGameSelect = (game) => {
-    setIsLoading(true); // Set loading state to true
+  // Fetch games data
+  useEffect(() => {
+    fetch('http://192.168.1.7/project-framedata/project-fd/project-fd/db/FetchGames.php')
+      .then((response) => response.json())
+      .then((data) => {
+        setGames(data); // Store games data directly
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching games data:', error);
+        setIsLoading(false);
+      });
+  }, []);
+
+  const handleGameSelect = (gameId) => {
+    setIsLoading(true);
     setTimeout(() => {
-      navigation.navigate('Characters', { game });
-      setIsLoading(false); // Set loading state to false after loading
-    }, 1500); // Simulate loading time (1.5 seconds)
+      navigation.navigate('Characters', { gameId }); // Send game ID to next screen
+      setIsLoading(false);
+    }, 1500);
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
-        {isLoading ? (
-          // Show loading screen
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#45559E" />
-            <ExpoImage source={require('../assets/images/loading.png')} style={styles.loadingImage} />
-          </View>
-        ) : (
-          // Show game selection screen
-          <View style={styles.gridContainer}>
-            {games.map((item) => (
-              <TouchableOpacity key={item.id} onPress={() => handleGameSelect(item)} style={styles.card}>
-                <ExpoImage source={item.image} style={styles.image} contentFit="cover" />
-                <Text style={styles.text}>{item.name}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        )}
-      </View>
+      {/* Full-screen loading overlay */}
+      {isLoading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="#45559E" />
+          <ExpoImage source={require('../assets/images/loading.png')} style={styles.loadingImage} />
+        </View>
+      )}
 
-      {/* Navbar outside the main container */}
+      <FlatList
+        data={games}
+        keyExtractor={(item) => item.id.toString()} // Use game ID as key
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => handleGameSelect(item.id)} style={styles.card}>
+            <ExpoImage source={{ uri: `http://192.168.1.7/project-framedata/project-fd/project-fd/${item.url}` }} style={styles.image} contentFit="cover" />
+            <Text style={styles.text}>{item.name}</Text>  {/* Display the game name */}
+          </TouchableOpacity>
+        )}
+        numColumns={2}
+        contentContainerStyle={styles.flatListContent} // Ensuring proper spacing and centering
+        showsVerticalScrollIndicator={false} // Hide vertical scrollbar
+      />
       <Navbar />
     </SafeAreaView>
   );
@@ -59,16 +63,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#121212', // Ensures full black background
   },
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#121212',
-    paddingBottom: 60,
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)', // Slightly transparent overlay
+    zIndex: 1, // Ensure it's above the rest of the screen content
   },
-  gridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+  flatListContent: {
+    padding: 16,
   },
   card: {
     width: '48%',
@@ -77,6 +84,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: '#1e1e1e',
     padding: 10,
+    margin: 3.5,
   },
   image: {
     width: '100%',
@@ -90,23 +98,9 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
   },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#121212',
-  },
-  loadingText: {
-    marginTop: 10,
-    color: '#45559E',
-    fontSize: 18,
-  },
   loadingImage: {
-    width: 50,
-  },
-  loadingImage: {
-    width: 100,  // Smaller width
-    height: 100, // Smaller height
+    width: 100,  // Corrected smaller width
+    height: 100, // Corrected smaller height
     resizeMode: 'contain', // Maintain aspect ratio
   },
 });

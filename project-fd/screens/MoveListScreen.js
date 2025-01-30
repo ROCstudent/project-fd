@@ -1,39 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
-import Collapsible from 'react-native-collapsible'; // Import the collapsible component
-import { ExpoImage } from 'expo-image'; // Import ExpoImage for the loading image
+import Collapsible from 'react-native-collapsible';
+import { ExpoImage } from 'expo-image'; 
 
 export default function MoveListScreen({ route, navigation }) {
   const { character } = route.params;
 
-  // State to track which section is open
-  const [isFramedataOpen, setIsFramedataOpen] = useState(false); // Start with framedata closed initially
-  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false); // Calculator section is initially closed
+  const [isFramedataOpen, setIsFramedataOpen] = useState(false);
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
 
-  // Sample framedata for the character
   const framedata = [
     { id: '1', move: 'Hadouken', damage: '60', speed: '15f', advantage: '+2' },
     { id: '2', move: 'Shoryuken', damage: '120', speed: '12f', advantage: '-3' },
     { id: '3', move: 'Tatsumaki', damage: '90', speed: '20f', advantage: '0' },
-    // Add more moves as needed
   ];
 
-  // UseEffect to ensure framedata section opens on mount
   useEffect(() => {
-    setIsFramedataOpen(true); // Open framedata on initial load
+    setIsFramedataOpen(true);
   }, []);
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Move List for {character.name}</Text>
 
-      {/* Accordion Section 1: Framedata */}
       <TouchableOpacity
         onPress={() => setIsFramedataOpen(!isFramedataOpen)}
         style={styles.accordionHeader}
       >
         <Text style={styles.accordionTitle}>Framedata</Text>
-        {/* Chevron arrow */}
         <Text style={styles.accordionChevron}>{isFramedataOpen ? '↑' : '↓'}</Text>
       </TouchableOpacity>
       <Collapsible collapsed={!isFramedataOpen}>
@@ -53,13 +47,11 @@ export default function MoveListScreen({ route, navigation }) {
         </View>
       </Collapsible>
 
-      {/* Accordion Section 2: Calculator */}
       <TouchableOpacity
         onPress={() => setIsCalculatorOpen(!isCalculatorOpen)}
         style={styles.accordionHeader}
       >
         <Text style={styles.accordionTitle}>Calculator (Coming Soon)</Text>
-        {/* Chevron arrow */}
         <Text style={styles.accordionChevron}>{isCalculatorOpen ? '↑' : '↓'}</Text>
       </TouchableOpacity>
       <Collapsible collapsed={!isCalculatorOpen}>
@@ -92,8 +84,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-
-  // Accordion styles
   accordionHeader: {
     backgroundColor: '#1e1e1e',
     padding: 10,
@@ -122,8 +112,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
-
-  // Table styles
   tableRow: {
     flexDirection: 'row',
     marginBottom: 10,
