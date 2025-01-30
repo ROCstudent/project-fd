@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import Navbar from '../screens/Navbar';
 import { useNavigation } from '@react-navigation/native';
 import { Image as ExpoImage } from 'expo-image';
@@ -9,18 +10,25 @@ export default function WelcomeScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
 
   // Fetch games data
-  useEffect(() => {
-    fetch('http://192.168.1.7/project-framedata/project-fd/project-fd/db/FetchGames.php')
-      .then((response) => response.json())
-      .then((data) => {
-        setGames(data); // Store games data directly
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching games data:', error);
-        setIsLoading(false);
-      });
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      setIsLoading(true);
+      fetch('http://192.168.1.7/project-framedata/project-fd/project-fd/db/FetchGames.php')
+        .then((response) => response.json())
+        .then((data) => {
+          setGames(data);  // Ensure data is fresh when navigating back
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error('Error fetching games data:', error);
+          setIsLoading(false);
+        });
+  
+      return () => {
+        setGames([]);  // Reset games when leaving the screen
+      };
+    }, [])
+  );
 
   const handleGameSelect = (gameId) => {
     setIsLoading(true);
