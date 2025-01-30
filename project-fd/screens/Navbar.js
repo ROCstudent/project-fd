@@ -22,10 +22,10 @@ export default function Navbar() {
         {/* Floating Action Button with Logo */}
         <TouchableOpacity onPress={() => navigation.navigate('Welcome')} style={styles.fab}>
           <ExpoImage 
-            source={require('../assets/images/logo.png')} 
+            source={require('../assets/images/home.png')} 
             style={styles.fabImage} 
             contentFit="contain"
-            placeholder={require('../assets/images/logo.png')} // Optional placeholder
+            placeholder={require('../assets/images/home.png')} // Optional placeholder
           />
         </TouchableOpacity>
 

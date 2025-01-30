@@ -33,7 +33,7 @@ export default function WelcomeScreen({ navigation }) {
           // Show loading screen
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color="#45559E" />
-            <Text style={styles.loadingText}>Loading...</Text>
+            <ExpoImage source={require('../assets/images/loading.png')} style={styles.loadingImage} />
           </View>
         ) : (
           // Show game selection screen
@@ -100,5 +100,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: '#45559E',
     fontSize: 18,
+  },
+  loadingImage: {
+    width: 50,
+  },
+  loadingImage: {
+    width: 100,  // Smaller width
+    height: 100, // Smaller height
+    resizeMode: 'contain', // Maintain aspect ratio
   },
 });
