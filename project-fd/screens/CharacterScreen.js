@@ -32,11 +32,10 @@ export default function CharacterScreen({ route, navigation }) {
   }
 
   const renderItem = ({ item, index }) => {
-    const isLastItem = index === gameCharacters.length - 1; // Check if it's the last item in the list
+    const isLastItem = index === gameCharacters.length - 1; // Check if it's the last item
+
     return (
-      <TouchableOpacity 
-        onPress={() => navigation.navigate('MoveList', { character: item })} 
-        style={[styles.card, isLastItem && styles.lastCard]}>
+      <TouchableOpacity onPress={() => navigation.navigate('MoveList', { character: item })} style={[styles.card, isLastItem && styles.lastCard]}>
         <ExpoImage source={{ uri: `http://192.168.1.7/project-framedata/project-fd/project-fd/${item.image_url}` }} style={styles.image} contentFit="cover" />
         <Text style={styles.text}>{item.name}</Text>
       </TouchableOpacity>
@@ -61,17 +60,8 @@ export default function CharacterScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#121212' },
   gridContainer: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', padding: 16 },
-  card: { 
-    width: '48%',  // Adjust width to fit two cards per row
-    marginBottom: 16, 
-    marginRight: 8,  // Adjust spacing between cards
-    borderRadius: 10, 
-    overflow: 'hidden', 
-    backgroundColor: '#1e1e1e' 
-  },
-  lastCard: {
-    marginRight: 0,  // Remove margin for the last card when there is an odd number
-  },
+  card: { width: '50%', marginBottom: 16, marginRight: 1, borderRadius: 10, overflow: 'hidden', backgroundColor: '#1e1e1e' },
+  lastCard: { width: '100%' }, // Special style for the last card
   image: { width: '100%', height: 150, borderRadius: 10 },
   text: { padding: 8, fontSize: 16, fontWeight: 'bold', color: 'white', textAlign: 'center' },
   loader: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#121212' },
